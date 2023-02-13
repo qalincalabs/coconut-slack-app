@@ -1,7 +1,7 @@
 import * as dotenv from "https://esm.sh/dotenv@16.0.3"
 dotenv.config()
 
-import { App } from "https://deno.land/x/slack_bolt@3.12.2"
+import { App } from "https://esm.sh/@slack/bolt@3.12.2"
 
 //import pkg from '@slack/bolt';
 //const { App } = pkg;
