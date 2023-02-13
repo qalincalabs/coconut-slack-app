@@ -1,8 +1,10 @@
 import * as dotenv from "dotenv"
 dotenv.config()
 
-import pkg from '@slack/bolt';
-const { App } = pkg;
+import { App } from "https://deno.land/x/slack_bolt@3.12.2"
+
+//import pkg from '@slack/bolt';
+//const { App } = pkg;
 
 
 import * as graphQlRequest from "./graphQlRequest.js"
