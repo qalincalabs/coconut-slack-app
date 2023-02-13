@@ -1,4 +1,4 @@
-import * as axios from "axios";
+import * as axios from "npm:axios";
 
 //Launch request with the choosen query
 function request(query) {
