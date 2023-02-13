@@ -1,4 +1,4 @@
-import * as dotenv from "https://deno.land/x/dotenv@16.0.3"
+import * as dotenv from "https://deno.land/x/dotenv@v3.2.0"
 dotenv.config()
 
 import { App } from "https://deno.land/x/slack_bolt@3.12.2"
