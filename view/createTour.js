@@ -1,5 +1,5 @@
 import * as graphQlRequest from "../graphQlRequest.js"
-import moment from "moment"
+import moment from "https://esm.sh/moment@2.29.4"
 
 //Vue faisant apparaître le formulaire de création de tour
 
