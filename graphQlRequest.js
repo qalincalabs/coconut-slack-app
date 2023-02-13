@@ -1,11 +1,9 @@
-import * as axios from "npm:axios";
-
 //Launch request with the choosen query
-function request(query) {
-  const endpoint = process.env.LogcicaApiUrl;
+async function request(query) {
+  const url = process.env.LogcicaApiUrl;
 
   const headers = {
-    "content-type": "application/json",
+    "Content-Type": "application/json",
     apiKey: process.env.LogcicaApiKey,
   };
 
@@ -16,15 +14,15 @@ function request(query) {
       body: JSON.stringify(query),
     };
 
-    return axios.post(endpoint, JSON.stringify(query), {
-      headers: headers,
-    });
+    const response = await fetch(url, options)
+    return response.json()
+
   } catch (error) {
     console.log(error);
   }
 }
 
-export function addTour(tourData) {
+export async function addTour(tourData) {
   var query = {};
   if (tourData.tourVehicle != null) {
     query = {
@@ -86,11 +84,11 @@ export function addTour(tourData) {
       },
     };
   }
-  return request(query);
+  return await request(query);
 }
 
 //Get every tours
-export function fetchTour() {
+export async function fetchTour() {
   const query = {
     query: `
       query {
@@ -102,11 +100,11 @@ export function fetchTour() {
       }`,
     variables: {},
   };
-  return request(query);
+  return await request(query);
 }
 
 //Get every tours
-export function fetchLatestToursForChannel(channelId) {
+export async function fetchLatestToursForChannel(channelId) {
   const query = {
     query: `{
         tours(
@@ -129,11 +127,11 @@ export function fetchLatestToursForChannel(channelId) {
       }`,
     variables: {},
   };
-  return request(query);
+  return await request(query);
 }
 
 //Get every workspace's vehicles
-export function fetchVehicles(workspaceId) {
+export async function fetchVehicles(workspaceId) {
   const query = {
     query: ` 
         query {
@@ -164,11 +162,11 @@ export function fetchVehicles(workspaceId) {
           }`,
     variables: {},
   };
-  return request(query);
+  return await request(query);
 }
 
 //Get tour informations with its Id
-export function getTourData(id) {
+export async function getTourData(id) {
   const query = {
     query: `
       query{tours(query: { _id_in: "${id}" })
@@ -241,11 +239,11 @@ export function getTourData(id) {
     `,
     variables: {},
   };
-  return request(query);
+  return await request(query);
 }
 
 //Get tour draft status
-export function getTourDraftStatus(tourDraftId) {
+export async function getTourDraftStatus(tourDraftId) {
   const query = {
     query: `query{
         tourDraft(query :{_id :"${tourDraftId}"}){
@@ -256,11 +254,11 @@ export function getTourDraftStatus(tourDraftId) {
       }`,
     variables: {},
   };
-  return request(query);
+  return await request(query);
 }
 
 //Get tour id by name
-export function findWorkspaceId(channelName) {
+export async function findWorkspaceId(channelName) {
   console.log(channelName);
   const query = {
     query: `query{workspace(query : { key : "${channelName}"}){
@@ -269,7 +267,7 @@ export function findWorkspaceId(channelName) {
       }`,
     variables: {},
   };
-  return request(query);
+  return await request(query);
 }
 
 //Create a new tour draft
@@ -292,7 +290,7 @@ export async function insertOneTourDraft(tourId, shipmentId) {
       },
     },
   };
-  return request(query);
+  return await request(query);
 }
 
 //Set stop's shipments status
