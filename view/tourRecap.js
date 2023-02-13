@@ -46,7 +46,7 @@ async function getView(tourId) {
   console.log(tourData)
 
   // Création d'un bloc d'affichage des stops de la tournée
-  var blockStopList = "";
+  let blockStopList = "";
   if (tourData.stops != null) {
     const stopList = tourData.stops.map((e) => e);
     blockStopList = stopList.map((t) => stopViewItem(tourData, t));
@@ -93,7 +93,6 @@ async function getView(tourId) {
       type: "plain_text",
       text: "Submit",
     },
-    type: "modal",
     close: {
       type: "plain_text",
       text: "Ok",

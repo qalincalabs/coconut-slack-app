@@ -4,7 +4,6 @@ import moment from "https://esm.sh/moment@2.29.4"
 //Vue faisant apparaître le formulaire de création de tour
 
 export async function getView(channel) {
-  const now = new Date();
 
   const initial_day = moment().tz("Europe/Brussels").format("YYYY-MM-DD");
   const initial_time = moment().tz("Europe/Brussels").format("HH:mm");

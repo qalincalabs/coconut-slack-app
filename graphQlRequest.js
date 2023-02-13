@@ -277,7 +277,7 @@ export async function insertOneTourDraft(tourId, shipmentId) {
   const shipmentsList = data.data.tours[0].shipments.map((e) => e._id);
   shipmentsList.push(shipmentId);
 
-  var query = {
+  const query = {
     query: `mutation insertOneTourDraft($data: TourDraftInsertInput!) {
         insertOneTourDraft(data: $data){
           _id

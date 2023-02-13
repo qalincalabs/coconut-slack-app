@@ -1,7 +1,7 @@
 import * as dotenv from "https://esm.sh/dotenv@16.0.3"
 dotenv.config()
 
-import { App } from "https://esm.sh/@slack/bolt@3.12.2"
+import { App } from "https://deno.land/x/slack_bolt@1.0.0/mod.ts"
 
 //import pkg from '@slack/bolt';
 //const { App } = pkg;
@@ -21,8 +21,8 @@ import {getAlreadyAssignedMessage} from "./messageSlack/alreadyAssigned.js"
 import {getDeliveryMessage} from "./messageSlack/delivery.js"
 
 const app = new App({
-  token: process.env.SLACK_BOT_TOKEN,
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
+  token: Deno.env.get("SLACK_BOT_TOKEN"),
+  signingSecret: Deno.env.get("SLACK_SIGNING_SECRET"),
 });
 
 app.command("/createtour", async ({ ack, payload, context }) => {
@@ -30,7 +30,7 @@ app.command("/createtour", async ({ ack, payload, context }) => {
   ack();
 
   try {
-    const result = await app.client.views.open({
+    await app.client.views.open({
       token: context.botToken,
       channel: payload.channel_id,
       trigger_id: payload.trigger_id,
@@ -55,7 +55,7 @@ app.action("assignButton", async ({ ack, body, payload, context }) => {
   console.log(body.channel.id)
   
   try {
-    const result = await app.client.views.open({
+    await app.client.views.open({
       token: context.botToken,
       trigger_id: body.trigger_id,
       view: await selectTour.getView(id, messageData, body.channel.id),
@@ -69,7 +69,7 @@ app.action("tourRecapButton", async ({ ack, body, payload, context }) => {
   //Quand on clique sur le bouton "voir le tour"
   const tourId = payload.value;
   try {
-    const result = await app.client.views.open({
+    await app.client.views.open({
       token: context.botToken,
       channel: payload.channel_id,
       trigger_id: body.trigger_id,
@@ -84,7 +84,7 @@ app.action("tourRecapButton", async ({ ack, body, payload, context }) => {
 
 app.action("close", async ({ ack, body, payload, context }) => {
   try {
-    const result = await app.client.chat.delete({
+    await app.client.chat.delete({
       token: context.botToken,
       ts: body.message.ts,
       channel: body.channel.id,
@@ -244,12 +244,13 @@ app.view(
       channelId: channelId,
       tourVehicle,
     };
-    graphQlRequest.addTour(tourData);
+    await graphQlRequest.addTour(tourData);
     ack();
   }
 );
 
 (async () => {
-  await app.start(process.env.PORT || 3000);
+  // Deno.env.get("PORT") || 
+  await app.start(3000);
   console.log("⚡️ Bolt app is running!");
 })();
