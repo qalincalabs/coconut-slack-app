@@ -1,7 +1,9 @@
-import * as dotenv from "https://esm.sh/dotenv@16.0.3"
-dotenv.config()
+// import * as dotenv from "https://esm.sh/dotenv@16.0.3"
+// dotenv.config()
 
+import "https://deno.land/x/dotenv@v2.0.0/load.ts"
 import { App } from "https://deno.land/x/slack_bolt@1.0.0/mod.ts"
+
 
 //import pkg from '@slack/bolt';
 //const { App } = pkg;
@@ -24,6 +26,7 @@ const app = new App({
   name: "Coconut",
   token: Deno.env.get("SLACK_BOT_TOKEN"),
   signingSecret: Deno.env.get("SLACK_SIGNING_SECRET"),
+  ignoreSelf: true,
 });
 
 app.command("/createtour", async ({ ack, payload, context }) => {
