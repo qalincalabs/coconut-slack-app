@@ -21,6 +21,7 @@ import {getAlreadyAssignedMessage} from "./messageSlack/alreadyAssigned.js"
 import {getDeliveryMessage} from "./messageSlack/delivery.js"
 
 const app = new App({
+  name: "Coconut",
   token: Deno.env.get("SLACK_BOT_TOKEN"),
   signingSecret: Deno.env.get("SLACK_SIGNING_SECRET"),
 });
