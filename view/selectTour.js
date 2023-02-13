@@ -1,5 +1,5 @@
 // Vue permettant de selectionner un tour pour y mettre un shipment
-const graphQlRequest = require("../graphQlRequest.js");
+import * as graphQlRequest from "../graphQlRequest.js"
 
 async function getView(id, messageData,channelId) {
   const { data } = await graphQlRequest.fetchLatestToursForChannel(channelId);
@@ -67,4 +67,3 @@ async function getView(id, messageData,channelId) {
     ],
 }`;
 }
-exports.getView = getView;

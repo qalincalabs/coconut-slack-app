@@ -1,18 +1,22 @@
-require('dotenv').config()
+import * as dotenv from "dotenv"
+dotenv.config()
 
-const { App } = require("@slack/bolt");
-const graphQlRequest = require("./graphQlRequest.js");
+import pkg from '@slack/bolt';
+const { App } = pkg;
 
-const createTour = require("./view/createTour.js");
-const selectTour = require("./view/selectTour.js");
-const tourRecap = require("./view/tourRecap.js");
-const newShipment = require("./view/newShipment.js");
 
-const getSuccessMessage = require("./messageSlack/success.js")
-const getAssignMessage = require("./messageSlack/assign.js")
-const getErrorMessage = require("./messageSlack/error.js")
-const getAlreadyAssignedMessage = require("./messageSlack/alreadyAssigned.js")
-const getDeliveryMessage = require("./messageSlack/delivery.js")
+import * as graphQlRequest from "./graphQlRequest.js"
+
+import * as createTour from "./view/createTour.js"
+import * as selectTour from "./view/selectTour.js"
+import * as tourRecap from "./view/tourRecap.js"
+import * as newShipment from "./view/newShipment.js"
+
+import {getSuccessMessage} from "./messageSlack/success.js"
+import {getAssignMessage} from "./messageSlack/assign.js"
+import {getErrorMessage} from "./messageSlack/error.js"
+import {getAlreadyAssignedMessage} from "./messageSlack/alreadyAssigned.js"
+import {getDeliveryMessage} from "./messageSlack/delivery.js"
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,

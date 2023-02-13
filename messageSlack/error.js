@@ -1,4 +1,4 @@
-function getErrorMessage(shipmentId, tourName) {
+export function getErrorMessage(shipmentId, tourName) {
   const block = [
     {
       type: "section",
@@ -51,4 +51,3 @@ function getErrorMessage(shipmentId, tourName) {
 
   return block;
 }
-exports.getErrorMessage = getErrorMessage;

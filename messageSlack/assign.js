@@ -1,4 +1,4 @@
-function getAssignMessage(shipmentId, tourName) {
+export function getAssignMessage(shipmentId, tourName) {
   const block = [
     {
       type: "section",
@@ -15,4 +15,3 @@ function getAssignMessage(shipmentId, tourName) {
 
   return block;
 }
-exports.getAssignMessage = getAssignMessage;

@@ -1,4 +1,4 @@
-function getAlreadyAssignedMessage(shipmentId, tourName) {
+export function getAlreadyAssignedMessage(shipmentId, tourName) {
   const block = [
     {
       type: "section",
@@ -51,4 +51,3 @@ function getAlreadyAssignedMessage(shipmentId, tourName) {
 
   return block;
 }
-exports.getAlreadyAssignedMessage = getAlreadyAssignedMessage;

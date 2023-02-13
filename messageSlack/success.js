@@ -1,4 +1,4 @@
-function getSuccessMessage(shipmentId, tourName, tourId) {
+export function getSuccessMessage(shipmentId, tourName, tourId) {
   const block = [
     {
       type: "section",
@@ -40,4 +40,3 @@ function getSuccessMessage(shipmentId, tourName, tourId) {
 
   return block;
 }
-exports.getSuccessMessage = getSuccessMessage;

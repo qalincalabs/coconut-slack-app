@@ -1,5 +1,6 @@
-async function getDeliveryMessage(tourId) {
-  const graphQlRequest = require("../graphQlRequest.js");
+import * as graphQlRequest from "../graphQlRequest.js"
+
+export async function getDeliveryMessage(tourId) {
   const { data } = await graphQlRequest.getTourData(tourId);
   const tourData = data.data.tours[0];
 
@@ -104,4 +105,3 @@ async function getDeliveryMessage(tourId) {
 
   return deliveryBlock;
 }
-exports.getDeliveryMessage = getDeliveryMessage;

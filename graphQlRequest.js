@@ -1,7 +1,7 @@
+import * as axios from "axios";
+
 //Launch request with the choosen query
 function request(query) {
-  const axios = require("axios");
-
   const endpoint = process.env.LogcicaApiUrl;
 
   const headers = {
@@ -24,13 +24,11 @@ function request(query) {
   }
 }
 
-module.exports = {
-  //Create a new tour with user data
-  addTour: function addTour(tourData) {
-    var query = {};
-    if (tourData.tourVehicle != null) {
-      query = {
-        query: `
+export function addTour(tourData) {
+  var query = {};
+  if (tourData.tourVehicle != null) {
+    query = {
+      query: `
         mutation insertOneTour($data: TourInsertInput!) {
           insertOneTour(data: $data) {  
             name
@@ -45,25 +43,25 @@ module.exports = {
               }
             }
           }`,
-        variables: {
-          data: {
-            createdAt: new Date(),
-            name: tourData.tourName,
-            date: tourData.tourDate,
-            vehicle: {
-              link: tourData.tourVehicle.value,
-            },
-            owner: {
-              workspace: {
-                link: tourData.channelId,
-              },
+      variables: {
+        data: {
+          createdAt: new Date(),
+          name: tourData.tourName,
+          date: tourData.tourDate,
+          vehicle: {
+            link: tourData.tourVehicle.value,
+          },
+          owner: {
+            workspace: {
+              link: tourData.channelId,
             },
           },
         },
-      };
-    } else {
-      query = {
-        query: `
+      },
+    };
+  } else {
+    query = {
+      query: `
         mutation insertOneTour($data: TourInsertInput!) {
           insertOneTour(data: $data) {  
             name
@@ -75,26 +73,26 @@ module.exports = {
             }
           }
         }`,
-        variables: {
-          data: {
-            name: tourData.tourName,
-            date: tourData.tourDate,
-            owner: {
-              workspace: {
-                link: tourData.channelId,
-              },
+      variables: {
+        data: {
+          name: tourData.tourName,
+          date: tourData.tourDate,
+          owner: {
+            workspace: {
+              link: tourData.channelId,
             },
           },
         },
-      };
-    }
-    return request(query);
-  },
+      },
+    };
+  }
+  return request(query);
+}
 
-  //Get every tours
-  fetchTour: function fetchTour() {
-    const query = {
-      query: `
+//Get every tours
+export function fetchTour() {
+  const query = {
+    query: `
       query {
         tours{
           name
@@ -102,15 +100,15 @@ module.exports = {
           _id
         }
       }`,
-      variables: {},
-    };
-    return request(query);
-  },
+    variables: {},
+  };
+  return request(query);
+}
 
-  //Get every tours
-  fetchLatestToursForChannel: function fetchLatestToursForChannel(channelId) {
-    const query = {
-      query: `{
+//Get every tours
+export function fetchLatestToursForChannel(channelId) {
+  const query = {
+    query: `{
         tours(
           query: {owner: { workspace: { coconut: { slackChannel: { id: "${channelId}"} } } }},
           sortBy: DATE_DESC
@@ -129,15 +127,15 @@ module.exports = {
           }
         }
       }`,
-      variables: {},
-    };
-    return request(query);
-  },
+    variables: {},
+  };
+  return request(query);
+}
 
-  //Get every workspace's vehicles
-  fetchVehicles: function fetchVehicles(workspaceId) {
-    const query = {
-      query: ` 
+//Get every workspace's vehicles
+export function fetchVehicles(workspaceId) {
+  const query = {
+    query: ` 
         query {
           vehicles(query:{owner:{workspace:{_id:"${workspaceId}"}}}){
             _id
@@ -164,15 +162,15 @@ module.exports = {
               }
             }
           }`,
-      variables: {},
-    };
-    return request(query);
-  },
+    variables: {},
+  };
+  return request(query);
+}
 
-  //Get tour informations with its Id
-  getTourData: function getTourData(id) {
-    const query = {
-      query: `
+//Get tour informations with its Id
+export function getTourData(id) {
+  const query = {
+    query: `
       query{tours(query: { _id_in: "${id}" })
         {
         distance{
@@ -241,76 +239,75 @@ module.exports = {
       }
     }
     `,
-      variables: {},
-    };
-    return request(query);
-  },
+    variables: {},
+  };
+  return request(query);
+}
 
-  //Get tour draft status
-  getTourDraftStatus: function getTourDraftStatus(tourDraftId) {
-    const query = {
-      query: `query{
+//Get tour draft status
+export function getTourDraftStatus(tourDraftId) {
+  const query = {
+    query: `query{
         tourDraft(query :{_id :"${tourDraftId}"}){
           validation{
             status
           }
         }
       }`,
-      variables: {},
-    };
-    return request(query);
-  },
+    variables: {},
+  };
+  return request(query);
+}
 
-  //Get tour id by name
-  findWorkspaceId: function findWorkspaceId(channelName) {
-    console.log(channelName);
-    const query = {
-      query: `query{workspace(query : { key : "${channelName}"}){
+//Get tour id by name
+export function findWorkspaceId(channelName) {
+  console.log(channelName);
+  const query = {
+    query: `query{workspace(query : { key : "${channelName}"}){
         _id
         }
       }`,
-      variables: {},
-    };
-    return request(query);
-  },
+    variables: {},
+  };
+  return request(query);
+}
 
-  //Create a new tour draft
-  insertOneTourDraft: async function insertOneTourDraft(tourId, shipmentId) {
-    const getTourData = require("./graphQlRequest.js");
-    const { data } = await getTourData.getTourData(`${tourId}`);
-    const shipmentsList = data.data.tours[0].shipments.map((e) => e._id);
-    shipmentsList.push(shipmentId);
+//Create a new tour draft
+export async function insertOneTourDraft(tourId, shipmentId) {
+  const getTourData = require("./graphQlRequest.js");
+  const { data } = await getTourData.getTourData(`${tourId}`);
+  const shipmentsList = data.data.tours[0].shipments.map((e) => e._id);
+  shipmentsList.push(shipmentId);
 
-    var query = {
-      query: `mutation insertOneTourDraft($data: TourDraftInsertInput!) {
+  var query = {
+    query: `mutation insertOneTourDraft($data: TourDraftInsertInput!) {
         insertOneTourDraft(data: $data){
           _id
         }
       }`,
-      variables: {
-        data: {
-          tour: { link: tourId },
-          shipments: { link: shipmentsList },
-        },
+    variables: {
+      data: {
+        tour: { link: tourId },
+        shipments: { link: shipmentsList },
       },
-    };
-    return request(query);
-  },
+    },
+  };
+  return request(query);
+}
 
-  //Set stop's shipments status
-  setStopStatus: async function setStopStatus(tourId, stopOrder) {
-    const getTourData = require("./graphQlRequest.js");
-    const { data } = await getTourData.getTourData(`${tourId}`);
+//Set stop's shipments status
+export async function setStopStatus(tourId, stopOrder) {
+  const getTourData = require("./graphQlRequest.js");
+  const { data } = await getTourData.getTourData(`${tourId}`);
 
-    const stopData = data.data.tours[0].stops[stopOrder];
+  const stopData = data.data.tours[0].stops[stopOrder];
 
-    const pickup = stopData?.pickup?.shipments ?? "";
-    const delivery = stopData?.delivery?.shipments ?? "";
+  const pickup = stopData?.pickup?.shipments ?? "";
+  const delivery = stopData?.delivery?.shipments ?? "";
 
-    /*var query = query qui met les shipments qui ont été pickup dans l'état "pickup"
+  /*var query = query qui met les shipments qui ont été pickup dans l'état "pickup"
     request(query);
     
     var query = query qui met les shipments qui ont été delivery dans l'état "delivery"
     request(query);*/
-  },
-};
+}

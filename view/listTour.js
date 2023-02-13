@@ -1,7 +1,7 @@
 //Vue faisant apparaître la liste des tours
-const graphQlRequest = require("../graphQlRequest.js");
+import {graphQlRequest} from "../graphQlRequest.js"
 
-async function getView(id) {
+export async function getView(id) {
   const { data } = await graphQlRequest.fetchTour();
 
   const tourList = data.data.tours.map((e, i) => ({ text: e.name, value: i }));
@@ -57,4 +57,3 @@ async function getView(id) {
 
   return view;
 }
-exports.getView = getView;

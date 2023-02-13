@@ -1,5 +1,5 @@
 //Simulation de reception d'une commande
-function getView (){
+export function getView (){
   
 return `
 [
@@ -72,5 +72,3 @@ return `
 		}
 	]`
 }
-
-exports.getView = getView;

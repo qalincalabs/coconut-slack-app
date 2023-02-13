@@ -1,9 +1,9 @@
+import * as graphQlRequest from "../graphQlRequest.js"
+import moment from "moment"
+
 //Vue faisant apparaître le formulaire de création de tour
 
-const graphQlRequest = require("../graphQlRequest.js");
-const moment = require("moment-timezone");
-
-async function getView(channel) {
+export async function getView(channel) {
   const now = new Date();
 
   const initial_day = moment().tz("Europe/Brussels").format("YYYY-MM-DD");
@@ -148,4 +148,3 @@ async function getView(channel) {
 
   return view;
 }
-exports.getView = getView;

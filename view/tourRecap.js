@@ -1,7 +1,7 @@
 //Vue apparaissant quand on ajoute avec succèes un shipment dans un tour (après validation par optim)
-const graphQlRequest = require("../graphQlRequest.js");
+import * as graphQlRequest from "../graphQlRequest.js"
 
-function stopViewItem(tourData, t) {
+export function stopViewItem(tourData, t) {
   const estimatedTimeOfArrival = t.estimatedTimeOfArrival.slice(11, 16);
   const stopName = t.name ?? "Emplacement inconnu";
 
@@ -119,5 +119,3 @@ async function getView(tourId) {
 
   return view;
 }
-
-exports.getView = getView;
